@@ -1,6 +1,6 @@
 package data_structures;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class taskLinkedList {
 
@@ -10,10 +10,11 @@ public class taskLinkedList {
 
     TaskNode head;
 
-    public void insertBegin(String name, LocalDateTime startDate, LocalDateTime endDate, String status) {
+    public void insertBegin(String name, String description, LocalDate startDate, LocalDate endDate, String status) {
         if (head == null) {
             TaskNode newTask = new TaskNode();
             newTask.name = name;
+            newTask.description = description;
             newTask.endDate = endDate;
             newTask.startDate = startDate;
             newTask.status = status;
@@ -30,10 +31,12 @@ public class taskLinkedList {
         }
     }
 
-    public void insertEnd(String name, LocalDateTime startDate, LocalDateTime endDate, String status) {
+    public void insertEnd(String name, String description, LocalDate startDate, LocalDate endDate, String status) {
         if (head == null) {
             TaskNode newTask = new TaskNode();
             newTask.name = name;
+            newTask.description = description;
+            newTask.startDate = startDate;
             newTask.endDate = endDate;
             newTask.status = status;
 
@@ -45,6 +48,8 @@ public class taskLinkedList {
             }
             TaskNode newTask = new TaskNode();
             newTask.name = name;
+            newTask.description = description;
+
             newTask.startDate = startDate;
             newTask.endDate = endDate;
             newTask.status = status;
@@ -53,7 +58,7 @@ public class taskLinkedList {
         }
     }
 
-    public void insertAfter(String name, LocalDateTime startDate, LocalDateTime endDate, String status, TaskNode task) {
+    public void insertAfter(String name, String description, LocalDate startDate, LocalDate endDate, String status, TaskNode task) {
 
         if (task != null) {
             System.out.println("The Selected Task is Empty");
@@ -61,6 +66,7 @@ public class taskLinkedList {
         } else {
             TaskNode newTask = new TaskNode();
             newTask.name = name;
+            newTask.description = description;
             newTask.startDate = startDate;
             newTask.endDate = endDate;
             newTask.status = status;
@@ -72,13 +78,21 @@ public class taskLinkedList {
 
     public void DisplayAllTask() {
         TaskNode currentTask = head;
+        int counter = 0;
         while (currentTask.nextTask != null) {
-            System.out.println("Task Name" + currentTask.name);
-            System.out.println("StartDate " + currentTask.startDate + ", EndDate " + currentTask.endDate + ", Status " + currentTask.status);
+             counter++;
+            System.out.println(counter+") Task Name " + currentTask.name);
+            System.out.println("    StartDate " + currentTask.startDate + " | EndDate " + currentTask.endDate + " | Status " + currentTask.status);
+
             currentTask = currentTask.nextTask;
+           
         }
-        System.out.println("Task Name" + currentTask.name);
-        System.out.println("StartDate " + currentTask.startDate + ", EndDate " + currentTask.endDate + ", Status " + currentTask.status);
+        
+            counter++;
+            System.out.println(counter+") Task Name " + currentTask.name);
+            System.out.println("    StartDate " + currentTask.startDate + " | EndDate " + currentTask.endDate + " | Status " + currentTask.status);
+        
+       
 
     }
 
