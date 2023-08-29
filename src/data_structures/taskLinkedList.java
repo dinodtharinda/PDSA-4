@@ -2,12 +2,12 @@ package data_structures;
 
 import java.time.LocalDate;
 
-public class taskLinkedList {
+public class TaskLinkedList {
 
-    public taskLinkedList() {
+    public TaskLinkedList() {
         head = null;
     }
-
+    Stack recentTask = new Stack();
     TaskNode head;
 
     public void insertBegin(String name, String description, LocalDate startDate, LocalDate endDate, String status) {
@@ -44,12 +44,10 @@ public class taskLinkedList {
             TaskNode lastTask = head;
             while (lastTask.nextTask != null) {
                 lastTask = lastTask.nextTask;
-
             }
             TaskNode newTask = new TaskNode();
             newTask.name = name;
             newTask.description = description;
-
             newTask.startDate = startDate;
             newTask.endDate = endDate;
             newTask.status = status;
@@ -76,24 +74,61 @@ public class taskLinkedList {
         }
     }
 
-    public void DisplayAllTask() {
+    public void displayAllTask() {
         TaskNode currentTask = head;
         int counter = 0;
         while (currentTask.nextTask != null) {
-             counter++;
-            System.out.println(counter+") Task Name " + currentTask.name);
+            counter++;
+            System.out.println(counter + ") Task Name " + currentTask.name);
             System.out.println("    StartDate " + currentTask.startDate + " | EndDate " + currentTask.endDate + " | Status " + currentTask.status);
 
             currentTask = currentTask.nextTask;
-           
-        }
-        
-            counter++;
-            System.out.println(counter+") Task Name " + currentTask.name);
-            System.out.println("    StartDate " + currentTask.startDate + " | EndDate " + currentTask.endDate + " | Status " + currentTask.status);
-        
-       
 
+        }
+        counter++;
+        System.out.println(counter + ") Task Name " + currentTask.name);
+        System.out.println("    StartDate " + currentTask.startDate + " | EndDate " + currentTask.endDate + " | Status " + currentTask.status);
+    }
+
+    public TaskNode getSelectedTask(int index) {
+        TaskNode current = head;
+        if (index <= tasklistSize()) {
+            for (int i = 1; i < index; i++) {
+                if (current.nextTask != null) {
+                    current = current.nextTask;
+
+                }
+            }
+            return current;
+        }
+        TaskNode error = new TaskNode();
+        error.name = "Error";
+        return error;
+
+    }
+
+    public int tasklistSize() {
+        int counter = 0;
+        TaskNode current = head;
+        while (current.nextTask != null) {
+            counter++;
+            current = current.nextTask;
+        }
+        if (head != null) {
+            counter++;
+        }
+        return counter;
+    }
+
+    public void displayTask(TaskNode task) {
+        System.out.println(task.name);
+    }
+
+    public void cancelTask(TaskNode task) {
+        TaskNode current = head;
+        while(current.nextTask != null){
+        
+        }
     }
 
 }
