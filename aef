@@ -1,0 +1,76 @@
+[1mdiff --git a/src/data_structures/TaskNode.java b/src/data_structures/TaskNode.java[m
+[1mindex a0c635a..1bb6c06 100644[m
+[1m--- a/src/data_structures/TaskNode.java[m
+[1m+++ b/src/data_structures/TaskNode.java[m
+[36m@@ -1,16 +1,11 @@[m
+[31m-/*[m
+[31m- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license[m
+[31m- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template[m
+[31m- */[m
+[32m+[m
+ package data_structures;[m
+[32m+[m[32mimport java.time.LocalDateTime;[m
+ [m
+[31m-/**[m
+[31m- *[m
+[31m- * @author dinod[m
+[31m- */[m
+ public class TaskNode {[m
+     String name;[m
+[31m-    String date;[m
+[32m+[m[32m    LocalDateTime startDate;[m
+[32m+[m[32m    LocalDateTime endDate;[m
+     String status;[m
+     TaskNode nextTask;[m
+ }[m
+[1mdiff --git a/src/data_structures/taskLinkedList.java b/src/data_structures/taskLinkedList.java[m
+[1mindex 3677fd1..5147eb9 100644[m
+[1m--- a/src/data_structures/taskLinkedList.java[m
+[1m+++ b/src/data_structures/taskLinkedList.java[m
+[36m@@ -1,11 +1,43 @@[m
+ package data_structures;[m
+[31m-[m
+[32m+[m[32mimport java.time.LocalDateTime;[m
+ public class taskLinkedList {[m
+ [m
+     TaskNode head;[m
+ [m
+[31m-    public void insertBegin(String name, String date, String status) {[m
+[31m-        [m
+[32m+[m[32m    public void insertBegin(String name, LocalDateTime startDate, LocalDateTime endDate, String status) {[m
+[32m+[m[32m        if (head == null) {[m
+[32m+[m[32m            TaskNode newTask = new TaskNode();[m
+[32m+[m[32m            newTask.name = name;[m
+[32m+[m[32m            newTask.endDate = endDate;[m
+[32m+[m[32m            newTask.status = status;[m
+[32m+[m
+[32m+[m[32m        } else {[m
+[32m+[m[32m            TaskNode newTask = new TaskNode();[m
+[32m+[m[32m            newTask.name = name;[m
+[32m+[m[32m            newTask.endDate = endDate;[m
+[32m+[m[32m            newTask.startDate = startDate;[m
+[32m+[m[32m            newTask.status = status;[m
+[32m+[m[32m            newTask.nextTask = head;[m
+[32m+[m[32m            head = newTask;[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m[32m    public void insertEnd(String name, LocalDateTime startDate, LocalDateTime endDate, String status){[m
+[32m+[m[32m          if (head == null) {[m
+[32m+[m[32m            TaskNode newTask = new TaskNode();[m
+[32m+[m[32m            newTask.name = name;[m
+[32m+[m[32m            newTask.endDate = endDate;[m
+[32m+[m[32m            newTask.status = status;[m
+[32m+[m
+[32m+[m[32m        } else {[m
+[32m+[m[32m          TaskNode lastTask = head;[m
+[32m+[m[32m          while(lastTask.nextTask != null){[m
+[32m+[m[32m              lastTask = lastNode.next;[m
+[32m+[m[41m              [m
+[32m+[m[32m          }[m
+[32m+[m[32m          TaskNode newTask = new TaskNode();[m
+[32m+[m[32m          newTask.name = name;[m
+[32m+[m[41m          [m
+[32m+[m[32m        }[m
+     }[m
+ [m
+ }[m
