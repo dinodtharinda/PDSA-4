@@ -17,13 +17,18 @@ public class PDSA4 {
      */
     static void displayOptions(TaskLinkedList taskList) {
         Scanner sc = new Scanner(System.in);
-        
+
         try {
             longSpace();
             System.out.println("Select Option below");
             System.out.println("1) Create new Task");
-            System.out.println("2) View All Task");
-            System.out.println("3) Select Task");
+            if(taskList.tasklistSize()>0){
+                System.out.println("2) View All Task");
+                System.out.println("3) Select Task");
+            }
+          
+            System.out.println("4) Undo Task");
+
             int option = sc.nextInt();
             longSpace();
             switch (option) {
@@ -38,21 +43,25 @@ public class PDSA4 {
                 case 3 -> {
                     selectTask(taskList);
                 }
-                
-                default ->{
-                System.out.println("No option call " + option);
+                case 4 ->{
+                    taskList.Undo();
+                    longSpace();
                     displayOptions(taskList);
                 }
-                    
+                default -> {
+                    System.out.println("No option call " + option);
+                    displayOptions(taskList);
+                }
+
             }
-            
+
         } catch (Exception e) {
             System.err.println("Please only enter option number" + e);
             displayOptions(taskList);
         }
-        
+
     }
-    
+
     static void selectTask(TaskLinkedList taskList) {
         Scanner sc = new Scanner(System.in);
         try {
@@ -65,29 +74,37 @@ public class PDSA4 {
                 displayOptions(taskList);
             }
             taskList.displayTask(selectedTask);
-             longSpace();
-            System.out.println("Done Task");
-            System.out.println("Cancel Task");
-            System.out.println("Edit Task");
-            int selectedOption =sc.nextInt();
+            longSpace();
+            System.out.println("1)Done Task");
+            System.out.println("2)Cancel Task");
+//            System.out.println("3)Edit Task");
+            System.out.println("3)Delete Task");
+
+            int selectedOption = sc.nextInt();
             switch (selectedOption) {
                 case 1:
-                    
+                    taskList.donoTask(selectedTask);
+                    break;
+                case 2:
+                    taskList.cancelTask(selectedTask);
+                case 3:
+                    taskList.deleteTask(selectedTask);
                     break;
                 default:
                     throw new AssertionError();
             }
+            displayOptions(taskList);
         } catch (Exception e) {
             System.err.println(e);
         }
-        
+
     }
-    
+
     static void longSpace() {
         System.out.println();
         System.out.println();
     }
-    
+
     static void createNewTask(TaskLinkedList taskList) {
         Scanner sc = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -104,29 +121,29 @@ public class PDSA4 {
 //            System.out.println("Enter Task Description ");
 //            String descreption = sc.nextLine();
 //            taskList.insertBegin(name, descreption, startDate, endDate, status);
-            taskList.insertBegin("task 1", "hellow owr", LocalDate.MAX, LocalDate.MAX, "good");
-            taskList.insertBegin("task 2", "hellow owr", LocalDate.MAX, LocalDate.MAX, "good");
-            taskList.insertBegin("task 3", "hellow owr", LocalDate.MAX, LocalDate.MAX, "good");
-            taskList.insertBegin("task 4", "hellow owr", LocalDate.MAX, LocalDate.MAX, "good");
-            taskList.insertBegin("task 5", "hellow owr", LocalDate.MAX, LocalDate.MAX, "good");
-            
+            taskList.insertBegin("task 1", "hellow owr", LocalDate.now(), LocalDate.MAX, "good");
+            taskList.insertBegin("task 2", "hellow owr", LocalDate.now(), LocalDate.MAX, "good");
+            taskList.insertBegin("task 3", "hellow owr", LocalDate.now(), LocalDate.MAX, "good");
+            taskList.insertBegin("task 4", "hellow owr", LocalDate.now(), LocalDate.MAX, "good");
+            taskList.insertBegin("task 5", "hellow owr", LocalDate.now(), LocalDate.MAX, "good");
+
             taskList.displayAllTask();
             longSpace();
             displayOptions(taskList);
-            
+
         } catch (Exception e) {
             longSpace();
             System.err.println(e);
             createNewTask(taskList);
         }
-        
+
     }
-    
+
     public static void main(String[] args) {
         System.out.println("++++++++Task Management System+++++++");
         longSpace();
         TaskLinkedList taskList = new TaskLinkedList();
         displayOptions(taskList);
     }
-    
+
 }

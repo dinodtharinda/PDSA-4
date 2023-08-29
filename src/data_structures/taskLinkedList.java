@@ -7,7 +7,7 @@ public class TaskLinkedList {
     public TaskLinkedList() {
         head = null;
     }
-    Stack recentTask = new Stack();
+    Stack recentTasks = new Stack();
     TaskNode head;
 
     public void insertBegin(String name, String description, LocalDate startDate, LocalDate endDate, String status) {
@@ -56,6 +56,47 @@ public class TaskLinkedList {
         }
     }
 
+    public void deleteTask(TaskNode task) {
+        TaskNode current = head;
+        TaskNode recentTask = null;
+        while (current.nextTask != null) {
+            if (current == task) {
+                if (recentTask != null) {
+                    recentTask.nextTask = current.nextTask;
+
+                } else {
+
+                    head = head.nextTask;
+
+                }
+
+            }
+            recentTask = current;
+            current = current.nextTask;
+        }
+        if (current == task) {
+            if (recentTask != null) {
+                recentTask.nextTask = current.nextTask;
+
+            } else {
+
+                head = head.nextTask;
+
+            }
+        }
+
+    }
+
+    public void Undo() {
+        TaskNode recentTask = recentTasks.pop();
+        if ("error".equals(recentTask.name)) {
+
+        } else {
+            insertEnd(recentTask.name, recentTask.description, recentTask.startDate, recentTask.endDate, recentTask.status);
+            displayAllTask();
+        }
+    }
+
     public void insertAfter(String name, String description, LocalDate startDate, LocalDate endDate, String status, TaskNode task) {
 
         if (task != null) {
@@ -75,32 +116,44 @@ public class TaskLinkedList {
     }
 
     public void displayAllTask() {
-        TaskNode currentTask = head;
-        int counter = 0;
-        while (currentTask.nextTask != null) {
+        if (!isEmpty()) {
+
+            TaskNode currentTask = head;
+            int counter = 0;
+            while (currentTask.nextTask != null) {
+                counter++;
+                System.out.println(counter + ") Task Name " + currentTask.name);
+                System.out.println("    StartDate " + currentTask.startDate + " | EndDate " + currentTask.endDate + " | Status " + currentTask.status);
+
+                currentTask = currentTask.nextTask;
+
+            }
             counter++;
             System.out.println(counter + ") Task Name " + currentTask.name);
             System.out.println("    StartDate " + currentTask.startDate + " | EndDate " + currentTask.endDate + " | Status " + currentTask.status);
-
-            currentTask = currentTask.nextTask;
-
+        } else {
+            System.err.println("Task list is Empty!");
         }
-        counter++;
-        System.out.println(counter + ") Task Name " + currentTask.name);
-        System.out.println("    StartDate " + currentTask.startDate + " | EndDate " + currentTask.endDate + " | Status " + currentTask.status);
+
     }
 
     public TaskNode getSelectedTask(int index) {
         TaskNode current = head;
-        if (index <= tasklistSize()) {
-            for (int i = 1; i < index; i++) {
-                if (current.nextTask != null) {
-                    current = current.nextTask;
+        if (!isEmpty()) {
+            if (index <= tasklistSize()) {
+                for (int i = 1; i < index; i++) {
+                    if (current.nextTask != null) {
+                        current = current.nextTask;
 
+                    }
                 }
+                return current;
             }
-            return current;
+
+        } else {
+            System.err.println("Task list is Empty");
         }
+
         TaskNode error = new TaskNode();
         error.name = "Error";
         return error;
@@ -110,14 +163,23 @@ public class TaskLinkedList {
     public int tasklistSize() {
         int counter = 0;
         TaskNode current = head;
-        while (current.nextTask != null) {
-            counter++;
-            current = current.nextTask;
+        if(!isEmpty()){
+            while (current.nextTask != null) {
+                counter++;
+                current = current.nextTask;
+            }
+            if (head != null) {
+                counter++;
+            }
+            return counter;
+        
         }
-        if (head != null) {
-            counter++;
-        }
-        return counter;
+        return 0;
+       
+    }
+
+    boolean isEmpty() {
+        return head == null;
     }
 
     public void displayTask(TaskNode task) {
@@ -126,9 +188,66 @@ public class TaskLinkedList {
 
     public void cancelTask(TaskNode task) {
         TaskNode current = head;
-        while(current.nextTask != null){
-        
+        TaskNode recentTask = null;
+        while (current.nextTask != null) {
+            if (current == task) {
+                if (recentTask != null) {
+                    recentTask.nextTask = current.nextTask;
+
+                } else {
+
+                    head = head.nextTask;
+
+                }
+
+            }
+            recentTask = current;
+            current = current.nextTask;
         }
+        if (current == task) {
+            if (recentTask != null) {
+                recentTask.nextTask = current.nextTask;
+
+            } else {
+
+                head = head.nextTask;
+
+            }
+        }
+        recentTasks.push(task.name, task.description, task.startDate, task.endDate, "Canceled", LocalDate.now());
+
+    }
+
+    public void donoTask(TaskNode task) {
+        TaskNode current = head;
+        TaskNode recentTask = null;
+        while (current.nextTask != null) {
+            if (current == task) {
+                if (recentTask != null) {
+                    recentTask.nextTask = current.nextTask;
+
+                } else {
+
+                    head = head.nextTask;
+
+                }
+
+            }
+            recentTask = current;
+            current = current.nextTask;
+        }
+        if (current == task) {
+            if (recentTask != null) {
+                recentTask.nextTask = current.nextTask;
+
+            } else {
+
+                head = head.nextTask;
+
+            }
+        }
+        recentTasks.push(task.name, task.description, task.startDate, task.endDate, "Done", LocalDate.now());
+
     }
 
 }
