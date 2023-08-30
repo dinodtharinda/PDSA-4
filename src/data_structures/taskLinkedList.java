@@ -99,7 +99,7 @@ public class TaskLinkedList {
 
     public void insertAfter(String name, String description, LocalDate startDate, LocalDate endDate, String status, TaskNode task) {
 
-        if (task != null) {
+        if (task == null) {
             System.out.println("The Selected Task is Empty");
 
         } else {
@@ -163,7 +163,7 @@ public class TaskLinkedList {
     public int tasklistSize() {
         int counter = 0;
         TaskNode current = head;
-        if(!isEmpty()){
+        if (!isEmpty()) {
             while (current.nextTask != null) {
                 counter++;
                 current = current.nextTask;
@@ -172,10 +172,10 @@ public class TaskLinkedList {
                 counter++;
             }
             return counter;
-        
+
         }
         return 0;
-       
+
     }
 
     boolean isEmpty() {
@@ -187,9 +187,24 @@ public class TaskLinkedList {
     }
 
     public void cancelTask(TaskNode task) {
-        TaskNode current = head;
-        TaskNode recentTask = null;
-        while (current.nextTask != null) {
+        if (!isEmpty()) {
+            TaskNode current = head;
+            TaskNode recentTask = null;
+            while (current.nextTask != null) {
+                if (current == task) {
+                    if (recentTask != null) {
+                        recentTask.nextTask = current.nextTask;
+
+                    } else {
+
+                        head = head.nextTask;
+
+                    }
+
+                }
+                recentTask = current;
+                current = current.nextTask;
+            }
             if (current == task) {
                 if (recentTask != null) {
                     recentTask.nextTask = current.nextTask;
@@ -199,22 +214,10 @@ public class TaskLinkedList {
                     head = head.nextTask;
 
                 }
-
             }
-            recentTask = current;
-            current = current.nextTask;
+            recentTasks.push(task.name, task.description, task.startDate, task.endDate, "Canceled", LocalDate.now());
+
         }
-        if (current == task) {
-            if (recentTask != null) {
-                recentTask.nextTask = current.nextTask;
-
-            } else {
-
-                head = head.nextTask;
-
-            }
-        }
-        recentTasks.push(task.name, task.description, task.startDate, task.endDate, "Canceled", LocalDate.now());
 
     }
 
