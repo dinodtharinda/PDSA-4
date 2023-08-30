@@ -25,9 +25,11 @@ public class PDSA4 {
             if (taskList.tasklistSize() > 0) {
                 System.out.println("2) View All Task");
                 System.out.println("3) Select Task");
-                System.out.println("4) Undo Task");
-
             }
+            if (taskList.hasRecentTask()) {
+                System.out.println("4) Undo Task");
+            }
+
             System.out.println("5) Exit");
             System.err.print("    Select action index - ");
 
@@ -85,6 +87,9 @@ public class PDSA4 {
             System.out.println("    2)Cancel Task");
             System.out.println("    3)Delete Task");
             System.out.println("    4)create New Task after this");
+            System.out.println("    5)Edit Task");
+            
+
             System.out.println("    0)Go to main Menu");
             System.err.print("    Select action index - ");
 
@@ -101,6 +106,9 @@ public class PDSA4 {
                     break;
                 case 4:
                     createNewTaskAfter(taskList, selectedTask);
+                    break;
+                case 5:
+                    editTask(taskList, selectedTask);
                     break;
                 case 0:
                     displayOptions(taskList);
@@ -120,6 +128,37 @@ public class PDSA4 {
         System.out.println();
     }
 
+    static void editTask(TaskLinkedList taskList, TaskNode task) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("--------Start Create new Task---------");
+        try {
+            System.err.print("    Enter Task Title - ");
+            String name = sc.nextLine();
+            System.err.print("    Enter Task Description - ");
+            String descreption = sc.nextLine();
+            System.err.print("    Enter Task Start Date (yyyy-MM-dd) - ");
+            String startDateString = sc.nextLine();
+          
+            System.err.print("    Enter Task End Date (yyyy-MM-dd) - ");
+            String endDateString = sc.nextLine();
+           
+            String status = "pending";
+            System.out.println("--------End create new Task---------");
+            taskList.editTask(name, descreption, startDateString, endDateString, status, task);
+
+            taskList.displayAllTask();
+
+            displayOptions(taskList);
+
+        } catch (Exception e) {
+            longSpace();
+            System.err.println(e);
+            editTask(taskList, task);
+        }
+
+    }
+
     static void createNewTask(TaskLinkedList taskList) {
         Scanner sc = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -135,7 +174,7 @@ public class PDSA4 {
             System.err.print("    Enter Task End Date (yyyy-MM-dd) - ");
             String endDateString = sc.next();
             LocalDate endDate = LocalDate.parse(endDateString, formatter);
-            String status = "Start";
+            String status = "Pending";
             System.out.println("--------End create new Task---------");
             taskList.insertBegin(name, descreption, startDate, endDate, status);
 //            taskList.insertBegin("task 1", "hellow owr", LocalDate.now(), LocalDate.now(), "good");
@@ -159,7 +198,7 @@ public class PDSA4 {
     static void createNewTaskAfter(TaskLinkedList taskList, TaskNode task) {
         Scanner sc = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-          System.out.println("--------Start Create new Task---------");
+        System.out.println("--------Start Create new Task---------");
         try {
             System.out.println("    Enter Task Title ");
             String name = sc.nextLine();
@@ -172,7 +211,7 @@ public class PDSA4 {
             String endDateString = sc.next();
             LocalDate endDate = LocalDate.parse(endDateString, formatter);
             String status = "Start";
-  System.out.println("--------End Create new Task---------");
+            System.out.println("--------End Create new Task---------");
             taskList.insertAfter(name, descreption, startDate, endDate, status, task);
             taskList.displayAllTask();
             longSpace();

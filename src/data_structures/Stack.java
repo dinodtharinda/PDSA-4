@@ -51,6 +51,10 @@ public class Stack {
         displayAll();
     }
 
+    public int size() {
+        return top;
+    }
+
     public TaskNode pop() {
         TaskNode recentTask = new TaskNode();
         if (!isEmpty()) {
