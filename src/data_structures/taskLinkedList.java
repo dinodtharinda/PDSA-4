@@ -88,24 +88,23 @@ public class TaskLinkedList {
 
     }
 
-    public void editTask(String name, String description, String startDateString, String c, String status, TaskNode task) {
-        try{
-         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String newName = name != null ? name : task.name;
-        String newDescription = description != null ? description : task.description;
-        String newStartDateString = !startDateString.equals("") ? startDateString : task.startDate.toString();
-        String newEndDateString = !startDateString.equals("") ? startDateString : task.endDate.toString();
-      
-        LocalDate endDate = LocalDate.parse(newStartDateString, formatter);
-        LocalDate startDate = LocalDate.parse(newEndDateString, formatter);
-        insertBegin(newName, newDescription, startDate, endDate, status);
+    public void editTask(String name, String description, String startDateString, String endDateString, String status, TaskNode task) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String newName = !name.equals("") ? name : task.name;
+            String newDescription = !"".equals(description) ? description : task.description;
+            String newStartDateString = !startDateString.equals("") ? startDateString : task.startDate.toString();
+            String newEndDateString = !endDateString.equals("") ? endDateString : task.endDate.toString();
+
+            LocalDate endDate = LocalDate.parse(newStartDateString, formatter);
+            LocalDate startDate = LocalDate.parse(newEndDateString, formatter);
+            insertBegin(newName, newDescription, startDate, endDate, status);
             deleteTask(task);
-        System.out.println("Edit Sucssess!");
-        }catch (Exception e){
-           
-        
+            System.out.println("Edit Sucssess!");
+        } catch (Exception e) {
+
         }
-       
+
     }
 
     public void Undo() {

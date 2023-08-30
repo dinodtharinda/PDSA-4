@@ -88,7 +88,6 @@ public class PDSA4 {
             System.out.println("    3)Delete Task");
             System.out.println("    4)create New Task after this");
             System.out.println("    5)Edit Task");
-            
 
             System.out.println("    0)Go to main Menu");
             System.err.print("    Select action index - ");
@@ -130,7 +129,7 @@ public class PDSA4 {
 
     static void editTask(TaskLinkedList taskList, TaskNode task) {
         Scanner sc = new Scanner(System.in);
-        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         System.out.println("--------Start Create new Task---------");
         try {
             System.err.print("    Enter Task Title - ");
@@ -139,10 +138,16 @@ public class PDSA4 {
             String descreption = sc.nextLine();
             System.err.print("    Enter Task Start Date (yyyy-MM-dd) - ");
             String startDateString = sc.nextLine();
-          
+            if (!"".equals(startDateString)) {
+                LocalDate startDate = LocalDate.parse(startDateString, formatter);
+            }
+
             System.err.print("    Enter Task End Date (yyyy-MM-dd) - ");
             String endDateString = sc.nextLine();
-           
+            if (!"".equals(endDateString)) {
+                LocalDate endDate = LocalDate.parse(endDateString, formatter);
+            }
+
             String status = "pending";
             System.out.println("--------End create new Task---------");
             taskList.editTask(name, descreption, startDateString, endDateString, status, task);
